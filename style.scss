@@ -56,9 +56,29 @@ input {
 #resultContainer {
     margin: 0px 0;
     border: 3px solid $red;
-    padding: 0.3rem;
+    padding: 0.9rem;
 }
 
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 3rem -4.2rem;
+    font-weight: 700;
+    font-size: 2.3rem;
+
+    &>div {
+        background: linear-gradient(68deg, #272727fc, #1f1f1f14, transparent);
+        padding: 2rem;
+        color: white;
+    }
+}
+
+
+.spinner__close {
+    display: none !important;
+}
 
 .loader,
 .loader:after {
@@ -105,8 +125,4 @@ input {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
-}
-
-.spinner__close {
-    display: none !important;
 }

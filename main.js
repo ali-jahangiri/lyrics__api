@@ -29,6 +29,7 @@ let isLoading = false;
 let resultList = [];
 
 const loadingSpinnerHandler = () => {
+  isLoading = !isLoading;
   if (!isLoading) {
     spinner.classList.add("spinner__close");
   } else {
@@ -36,19 +37,30 @@ const loadingSpinnerHandler = () => {
   }
 };
 
-const itemCreator = () => {};
+const itemCreator = () => {
+  resultList.forEach(
+    ({ preview, title, artist: { picture_xl, name }, album: { cover_xl } }) => {
+      resultContainer.innerHTML += `
+        <div style="background: url(${cover_xl});" data-id="" class="item">
+        <div><p>${title}</p></div>
+      </div>
+        `;
+      // <audio src="${preview}"></audio>
+    }
+  );
+};
 
 const searchResult = debounce((value) => {
-  isLoading = true;
+  console.log("inside", value);
   loadingSpinnerHandler();
   fetch(`https://api.lyrics.ovh/suggest/${value.trim()}`)
     .then((res) => res.json())
     .then(({ data }) => {
-      isLoading = false;
+      resultList = data;
       loadingSpinnerHandler();
-      console.log(data);
+      itemCreator();
     });
-}, 500);
+}, 5000);
 input.addEventListener("input", ({ target: { value } }) => {
   if (value.trim()) searchResult(value);
 });
